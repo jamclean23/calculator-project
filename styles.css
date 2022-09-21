@@ -1,0 +1,115 @@
+/*CSS Stylesheet*/
+
+@font-face {
+    font-family: "calculator";
+    src: url("Calculator.ttf");
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    justify-content: center;
+}
+
+body {
+    display: flex;
+    justify-content: center;
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+    /*background-color: rgb(4, 4, 63);*/
+    background-image: linear-gradient(to top left, rgb(4, 4, 63), rgb(9, 9, 122));
+    border: 1px solid black;
+    box-shadow: 0 0 .3rem .05rem black;
+    border-radius: 1rem;
+    align-items: center;
+    width: 40vw;
+    height: 90vh;
+    margin-top: 2vh;
+}
+
+.display {
+    width: 90%;
+    height: 15%;
+    margin-bottom: 10%;
+    margin-top: 5%;
+    padding: 2%;
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    background-color: rgb(139, 141, 150);
+    border: 1px solid black;
+    border-radius: .2rem;
+    box-shadow: 0 0 .1rem .05rem black;
+    font-family:'calculator';
+    font-size: 3rem;
+    
+}
+
+.buttons {
+    display: flex;
+}
+
+.numpad {
+    display: flex;
+    flex-wrap: wrap;
+    width: 21vw;
+    height: 40vh;
+    flex-direction: row-reverse;
+}
+
+.rightButtonColumn {
+    display: flex;
+    flex-wrap: wrap;
+    width: 7vw;
+}
+
+.rightButtonColumn .button {
+    flex: 1 1 100%; 
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.middleButtonColumn {
+    display: flex;
+    flex-direction: column;
+}
+
+.leftButtonColumn {
+    display: flex;
+    width: 7vw;
+    align-items: flex-end;
+}
+
+.leftButtonColumn .button {
+    flex: 1 1 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 20%;
+}
+
+.numpad .button {
+    flex: 1 1 30%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.equalsButton {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 10vh;
+
+}
+
+.button {
+    border-radius: 1rem;
+    background-color: lightgray;
+    margin: 1%;
+}
