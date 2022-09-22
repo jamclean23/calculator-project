@@ -62,10 +62,17 @@ function updateButtons(event) {
             }
         }
     } else if (pressedButton == '=') {
-        workingExpression = operate(currentOperator, storedExpression, workingExpression);
-        storedExpression = '';
-        currentOperator = '';
-        updateDisplay(workingExpression);
+        if (storedExpression) {
+            workingExpression = operate(currentOperator, storedExpression, workingExpression);
+            storedExpression = '';
+            currentOperator = '';
+        
+            if (Number.isFinite(workingExpression)) {
+                updateDisplay(workingExpression);
+            } else {
+                updateDisplay("LOL no dividing by zero");
+            }
+        }
     } else if (pressedButton == 'C') {
         clear();
     }
@@ -106,6 +113,7 @@ function operate(operator, firstNumber, secondNumber) {
 
     return result;
 }
+
 
 function add(firstNumber, secondNumber) {
     return +firstNumber + +secondNumber;
