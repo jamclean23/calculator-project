@@ -62,7 +62,7 @@ function updateButtons(event) {
                         storedExpression = operate(currentOperator, storedExpression, workingExpression);
                         currentOperator = pressedButton;
                         workingExpression = '';
-                        updateDisplay(currentOperator);
+                        updateDisplay(storedExpression + " " + currentOperator);
                     } else { 
                         storedExpression = workingExpression;
                         workingExpression = '';
