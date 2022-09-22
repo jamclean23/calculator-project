@@ -79,8 +79,7 @@ function updateButtons(event) {
             workingExpression = operate(currentOperator, storedExpression, workingExpression);
             storedExpression = '';
             currentOperator = '';
-        
-            if (Number.isFinite(workingExpression)) {
+            if (!(workingExpression.toString() === 'Infinity')) {
                 updateDisplay(workingExpression);
             } else {
                 updateDisplay("LOL no dividing by zero");
