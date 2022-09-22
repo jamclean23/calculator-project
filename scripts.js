@@ -2,9 +2,11 @@
 
 const buttons = document.querySelectorAll('.button');
 const display = document.querySelector('.display');
+const statsContainer = document.querySelector('.statsContainer');
 const box1 = document.querySelector('.box1');
 const box2 = document.querySelector('.box2');
 const box3 = document.querySelector('.box3');
+
 
 let workingExpression = '';
 let storedExpression = '';
@@ -12,6 +14,17 @@ let currentOperator = '';
 let lastPressed = '';
 
 updateDisplay('0.0');
+
+window.addEventListener('keydown', (e) => {
+    if (e.key == 'd') {
+        console.log(getComputedStyle(statsContainer).display);
+        if (getComputedStyle(statsContainer).display == 'none') {
+            statsContainer.style.cssText = "display: flex;";
+        } else {
+            statsContainer.style.cssText = "display: none;";
+        }
+    }
+}, false);
 
 buttons.forEach((button) => {
     button.addEventListener('click', updateButtons);
