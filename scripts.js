@@ -2,7 +2,16 @@
 
 const buttons = document.querySelectorAll('.button');
 const display = document.querySelector('.display');
-const toBeEvaluated = ['', ''];
+const box1 = document.querySelector('.box1');
+const box2 = document.querySelector('.box2');
+const box3 = document.querySelector('.box3');
+
+let workingExpression = '';
+let storedExpression = '';
+let currentOperator = '';
+let lastPressed = '';
+
+updateDisplay('0.0');
 
 buttons.forEach((button) => {
     button.addEventListener('click', updateButtons);
@@ -10,43 +19,92 @@ buttons.forEach((button) => {
 
 function updateButtons(event) {
     let pressedButton = event.srcElement.innerText;
-    console.log(pressedButton);
+    console.log("Current Pressed: " + pressedButton);
+    console.log("lastPressed: " + lastPressed);
+    console.log("working expression length: " + workingExpression.toString().length);
 
-    if (toBeEvaluated[0].length < 10) {
-        if (pressedButton == "+/-") {
-            toBeEvaluated[0] *= -1;
-        } else if (pressedButton == "." && !(toBeEvaluated[0].includes('.'))) {
-            if (toBeEvaluated[0] == '') {
-                toBeEvaluated[0] = '0.';
-            } else {
-                console.log('not empty');
-                toBeEvaluated[0] += '.';
-            }
-        } else if (/\d/.test(pressedButton)) {
-            toBeEvaluated[0] += pressedButton;
-        } else if (pressedButton == 'C') {
-            toBeEvaluated[0] = '';
-        } else if (/\/|\*|\\|\+|\-/.test(pressedButton)) {
-            toBeEvaluated[1] = toBeEvaluated[0];
-            toBeEvaluated[0] = '';
-            toBeEvaluated[3] = pressedButton;
-        } else if (pressedButton == '=') {
-            toBeEvaluated[0] = operate(toBeEvaluated[3], toBeEvaluated[1], toBeEvaluated[0]);
+
+    if (pressedButton == "+/-") {
+        workingExpression *= -1;
+        updateDisplay(workingExpression);
+    } else if (pressedButton == "." && !(workingExpression.includes('.'))) {
+        if (workingExpression == '') {
+            workingExpression = '0.';
+            updateDisplay(workingExpression);
+        } else {
+            workingExpression += '.';
+            updateDisplay(workingExpression);
         }
+    } else if (/\d/.test(pressedButton) && workingExpression.toString().length < 11) {
+        if (lastPressed == '=') {
+            clear();
+        }
+        console.log("pressed");
+        workingExpression += pressedButton;
+        updateDisplay(workingExpression);
+    } else if (/\/|\*|\\|\+|\-/.test(pressedButton)) {
+        if (!(pressedButton == lastPressed)) {
+            if (!(/\/|\*|\\|\+|\-/.test(lastPressed))) {
+                    if (workingExpression && storedExpression) {
+                        storedExpression = operate(currentOperator, storedExpression, workingExpression);
+                        currentOperator = pressedButton;
+                        workingExpression = '';
+                        updateDisplay(currentOperator);
+                    } else { 
+                        storedExpression = workingExpression;
+                        workingExpression = '';
+                        currentOperator = pressedButton;
+                        updateDisplay(pressedButton);
+                    }
+            } else {
+                currentOperator = pressedButton;
+                updateDisplay(pressedButton);
+            }
+        }
+    } else if (pressedButton == '=') {
+        workingExpression = operate(currentOperator, storedExpression, workingExpression);
+        storedExpression = '';
+        currentOperator = '';
+        updateDisplay(workingExpression);
+    } else if (pressedButton == 'C') {
+        clear();
     }
-    display.innerText = toBeEvaluated[0];
+    lastPressed = pressedButton;
+    box1.innerText = "Working Expression: " + workingExpression;
+    box2.innerText = "Stored Expression: " + storedExpression;
+    box3.innerText = "Current Operator: " + currentOperator;
+}
+
+function updateDisplay(toBeDisplayed) {
+    display.innerText = toBeDisplayed;
+}
+
+function clear() {
+    console.log("clear");
+    workingExpression = '';
+    storedExpression = '';
+    currentOperator = '';
+    updateDisplay('0.0');
 }
 
 function operate(operator, firstNumber, secondNumber) {
+    let result;
+
     if (operator == '+') {
-        return add(firstNumber, secondNumber);
+        result = add(firstNumber, secondNumber);
     } else if (operator == '-') {
-        return subtract(firstNumber, secondNumber);
+        result = subtract(firstNumber, secondNumber);
     } else if (operator == '*') {
-        return multiply(firstNumber, secondNumber);
+        result = multiply(firstNumber, secondNumber);
     } else if (operator == '/') {
-        return divide(firstNumber, secondNumber);
+        result = divide(firstNumber, secondNumber);
     }
+
+    if (result.toString().length > 10) {
+        result = result.toExponential(4);
+    }
+
+    return result;
 }
 
 function add(firstNumber, secondNumber) {
