@@ -31,7 +31,10 @@ body {
     width: 40vw;
     height: 90vh;
     margin-top: 2vh;
+    flex-shrink: 0;
 }
+
+
 
 .display {
     width: 90%;
@@ -133,4 +136,26 @@ body {
     justify-content: center;
     align-items: center;
     margin: 2vh;
+}
+
+@media (max-width: 479px) {
+    .container{
+        width: 80vw;
+    }
+    .buttons {
+        width: 70vw;
+    }
+    .leftButtonColumn {
+        flex: 1;
+    }
+    .middleButtonColumn {
+        flex: 1 1 45%;
+    }
+    .numpad {
+        width: 100%;
+    }
+    .rightButtonColumn {
+        flex: 1;
+    }
+    
 }
